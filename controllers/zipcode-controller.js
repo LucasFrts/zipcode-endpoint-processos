@@ -12,8 +12,10 @@ export const getZipcode = async (req, res) => {
 
     if(response.ok){
         const data = await response.json();
-        const address = addressFormat(data)
-        return res.json(success("Endereço encontrado com sucesso!", address));
+        if(!data.erro){
+            const address = addressFormat(data)
+            return res.json(success("Endereço encontrado com sucesso!", address));
+        }   
     }
     
     return res.status(400).json(error("Cep inválido, por favor insira um cep válido e tente novamente."))
